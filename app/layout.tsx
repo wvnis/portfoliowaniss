@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://wnnis.github.io/portfoliowaniss/"),
+  metadataBase: new URL("https://wvnis.github.io/portfoliowaniss/"),
 
   title: "Waniss Saggal | Développeur web junior",
   description:
@@ -38,11 +38,11 @@ export const metadata: Metadata = {
     title: "Waniss Saggal | Développeur web junior",
     description:
       "Découvrez mon portfolio, mes projets et mon parcours en développement web.",
-    url: "/",
+    url: "https://wvnis.github.io/portfoliowaniss",
     siteName: "Waniss Saggal Portfolio",
     images: [
       {
-        url: "/preview.png",
+        url: "https://wvnis.github.io/portfoliowaniss/preview.png",
         width: 1200,
         height: 630,
         alt: "Portfolio Waniss Saggal",
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     title: "Waniss Saggal | Portfolio",
     description:
       "Portfolio de Waniss Saggal - Étudiant en BTS SIO SLAM et développement web",
-    images: ["/preview.png"],
+    images: ["https://wvnis.github.io/portfoliowaniss/preview.png"],
   },
 
 };
