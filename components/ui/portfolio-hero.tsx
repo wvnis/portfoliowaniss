@@ -635,7 +635,7 @@ export default function Component() {
 
             <div className="flex justify-center lg:justify-end">
               <a
-                href="/cv-waniss.pdf"
+                href={`${basePath}/cv-waniss.pdf`}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Voir le CV en PDF"
