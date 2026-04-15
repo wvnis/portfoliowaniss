@@ -523,8 +523,9 @@ export default function Component() {
                     src="/moi.jpg"
                     alt="Photo de profil de Waniss Saggal"
                     fill
+                    sizes="(max-width: 640px) 55px, (max-width: 1024px) 90px, 129px"
                     className="object-cover"
-                    priority
+                    priority    
                   />
                 </div>
               </div>

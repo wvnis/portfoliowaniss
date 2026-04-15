@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("http://localhost:3000"),
+  metadataBase: new URL("https://tonpseudo.github.io"),
 
   title: "Waniss Saggal | Développeur web junior",
   description:

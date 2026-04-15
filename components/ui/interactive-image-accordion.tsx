@@ -131,7 +131,7 @@ export function LandingAccordionItem() {
   return (
     <div className="w-full">
       <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-12">
-        <div className="w-full lg:w-1/2 text-center lg:text-left">
+        <div className="w-full lg:w-1/2 text-left">
           <p className="text-base md:text-lg tracking-[0.22em] text-neutral-500 mb-5">
             PROJECTS
           </p>
@@ -140,12 +140,12 @@ export function LandingAccordionItem() {
             Mes <span style={{ color: "#C3E41D" }}>projets</span>
           </h2>
 
-          <p className="mt-6 text-neutral-400 max-w-xl mx-auto lg:mx-0 text-base sm:text-lg leading-relaxed">
+          <p className="mt-6 text-neutral-400 max-w-xl mx-0 text-base sm:text-lg leading-relaxed">
             Voici une sélection de projets réalisés, en cours ou à venir, qui
             illustrent ma progression en développement web et en informatique.
           </p>
 
-          <div className="mt-8">
+          <div className="mt-8 flex justify-start">
             <a
               href="#contact"
               className="inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-semibold hover:opacity-80 active:scale-95 transition-all duration-200"
