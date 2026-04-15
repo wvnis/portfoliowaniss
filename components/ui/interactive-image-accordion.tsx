@@ -15,7 +15,7 @@ const ACCORDION_ITEMS: AccordionItemData[] = [
     title: "Portfolio personnel",
     subtitle:
       "Site de présentation de mon profil, de mes compétences et de mes projets.",
-    imageUrl: "/preview.png",
+    imageUrl: "/siteportfolio.png",
   },
   {
     id: 2,
