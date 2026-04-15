@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     title: "Waniss Saggal | Développeur web junior",
     description:
       "Découvrez mon portfolio, mes projets et mon parcours en développement web.",
-    url: "https://wvnis.github.io/portfoliowaniss",
+    url: "https://wvnis.github.io/portfoliowaniss/",
     siteName: "Waniss Saggal Portfolio",
     images: [
       {
