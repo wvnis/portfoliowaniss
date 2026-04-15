@@ -2,6 +2,9 @@
 
 import { memo, useCallback, useState } from "react";
 
+const basePath =
+  process.env.NODE_ENV === "production" ? "/portfoliowaniss" : "";
+
 type AccordionItemData = {
   id: number;
   title: string;
@@ -15,7 +18,7 @@ const ACCORDION_ITEMS: AccordionItemData[] = [
     title: "Portfolio personnel",
     subtitle:
       "Site de présentation de mon profil, de mes compétences et de mes projets.",
-    imageUrl: "/siteportfolio.png",
+    imageUrl: `${basePath}/siteportfolio.png`,
   },
   {
     id: 2,

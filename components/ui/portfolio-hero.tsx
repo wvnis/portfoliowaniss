@@ -14,6 +14,9 @@ import Image from "next/image";
 import { Mail, Menu, X } from "lucide-react";
 import { LandingAccordionItem } from "./interactive-image-accordion";
 
+const basePath =
+  process.env.NODE_ENV === "production" ? "/portfoliowaniss" : "";
+
 type BlurTextProps = {
   text: string;
   delay?: number;
@@ -520,7 +523,7 @@ export default function Component() {
                   }}
                 >
                   <Image
-                    src="/moi.jpg"
+                    src={`${basePath}/moi.jpg`}
                     alt="Photo de profil de Waniss Saggal"
                     fill
                     sizes="(max-width: 640px) 55px, (max-width: 1024px) 90px, 129px"
@@ -621,7 +624,7 @@ export default function Component() {
               </p>
 
               <a
-                href="/cv-waniss.pdf"
+                href={`${basePath}/cv-waniss.pdf`}
                 download
                 className="inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-semibold hover:opacity-85 active:scale-95 transition-all duration-200"
                 style={{ backgroundColor: "#C3E41D", color: "#000" }}
@@ -644,7 +647,7 @@ export default function Component() {
                 }}
               >
                 <Image
-                  src="/cv-preview.png"
+                  src={`${basePath}/cv-preview.png`}
                   alt="Aperçu du CV de Waniss Saggal"
                   width={180}
                   height={254}
