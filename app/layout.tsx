@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://tonpseudo.github.io"),
+  metadataBase: new URL("https://wnnis.github.io/portfoliowaniss/"),
 
   title: "Waniss Saggal | Développeur web junior",
   description:
@@ -60,9 +60,6 @@ export const metadata: Metadata = {
     images: ["/preview.png"],
   },
 
-  icons: {
-    icon: "/favicon.ico",
-  },
 };
 
 export default function RootLayout({

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tonpseudo.github.io/portfoliowaniss/sitemap.xml
+Sitemap: https://wnnis.github.io/portfoliowaniss/
