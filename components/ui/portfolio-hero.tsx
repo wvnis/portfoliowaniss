@@ -622,7 +622,7 @@ export default function Portfolio() {
           <LandingAccordionItem />
         </section>
 
-        <section className={sectionClass} aria-label="Blog et veille">
+        <section className={sectionClass} aria-label="Blog et actualités">
           <div
             className="rounded-3xl border p-6 sm:p-10"
             style={{
@@ -630,14 +630,14 @@ export default function Portfolio() {
               backgroundColor: isDark ? "#ffffff05" : "#00000003",
             }}
           >
-            <SectionLabel>BLOG & VEILLE</SectionLabel>
+            <SectionLabel>BLOG & ACTUALITÉS</SectionLabel>
             <SectionHeading>Mes projets, étape par étape.</SectionHeading>
             <p
               className="mt-5 max-w-2xl leading-relaxed"
               style={{ color: mutedColor }}
             >
               Je partage l’évolution de mes réalisations et je suis les
-              nouveautés de l’IA et du développement grâce à ma veille Frandroid
+              actualités tech sélectionnées sur Frandroid
               et Blog du Modérateur.
             </p>
             <a

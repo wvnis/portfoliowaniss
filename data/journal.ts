@@ -30,8 +30,8 @@ export const journal: JournalEntry[] = [
         text: "L’accueil propose des accès directs aux projets et au CV. Le menu est en français, le thème choisi est mémorisé et la navigation au clavier est améliorée.",
       },
       {
-        title: "Créer un journal et une veille",
-        text: "Cette page rassemble deux espaces : un journal pour raconter les étapes de mes réalisations et une veille pour retrouver les articles de Frandroid et du Blog du Modérateur liés à l’IA et au développement.",
+        title: "Créer un journal et une rubrique d’actualités",
+        text: "Cette page rassemble deux espaces : un journal pour raconter les étapes de mes réalisations et une rubrique Actualités tech pour retrouver les articles de Frandroid et du Blog du Modérateur liés à l’IA et au développement.",
       },
     ],
     links: [

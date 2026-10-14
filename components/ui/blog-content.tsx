@@ -113,8 +113,8 @@ export function BlogContent() {
             <span className="text-[#C3E41D]">Le web aussi.</span>
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-neutral-300 sm:text-lg">
-            Mon journal pour partager les étapes de mes réalisations, puis une
-            veille quotidienne pour suivre l’IA et le développement.
+            Mon journal pour partager les étapes de mes réalisations, puis les
+            actualités tech du moment pour suivre l’IA et le développement.
           </p>
           <nav
             aria-label="Rubriques du blog"
@@ -130,7 +130,7 @@ export function BlogContent() {
               href="#veille"
               className="rounded-full border border-white/20 px-5 py-3 text-sm"
             >
-              Veille IA & dev ↓
+              Actualités tech ↓
             </a>
           </nav>
         </div>
@@ -188,7 +188,7 @@ export function BlogContent() {
           >
             <div className="mb-6 flex items-center gap-3">
               <Radio className="text-[#C3E41D]" size={24} />
-              <h2 className="text-2xl font-semibold">Veille IA & dev</h2>
+              <h2 className="text-2xl font-semibold">Actualités tech</h2>
             </div>
             <p className="mb-6 text-sm leading-relaxed text-neutral-400">
               Titres et liens vers les articles de Frandroid et du Blog du
@@ -347,7 +347,7 @@ export function BlogContent() {
           </section>
         </div>
         <footer className="mt-16 flex flex-wrap justify-between gap-4 border-t border-white/10 py-8 text-sm text-neutral-400">
-          <span>Waniss Saggal · Blog & veille</span>
+          <span>Waniss Saggal · Blog & actualités</span>
           <Link href="/">Retour au portfolio</Link>
         </footer>
       </div>
