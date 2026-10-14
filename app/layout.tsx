@@ -14,6 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://wvnis.github.io/portfoliowaniss/"),
+  alternates: { canonical: "https://wvnis.github.io/portfoliowaniss/" },
 
   title: "Waniss Saggal | Développeur web junior",
   description:

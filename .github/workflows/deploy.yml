@@ -3,6 +3,13 @@ name: Deploy Next.js to GitHub Pages
 on:
   push:
     branches: ["main"]
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 permissions:
   contents: read
@@ -11,6 +18,7 @@ permissions:
 
 jobs:
   build:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
@@ -25,13 +33,21 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+
+      - name: Refresh news feeds
+        run: python scripts/fetch_news.py
 
       - name: Build
-        run: |
-          echo "GITHUB_PAGES=true" >> $GITHUB_ENV
-          npm run build
+        run: npm run build
+        env:
+          GITHUB_PAGES: "true"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  --portfolio-accent: #6a8000;
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -12,15 +13,90 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root.dark {
+  --portfolio-accent: #c3e41d;
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+html {
+  scroll-behavior: smooth;
+}
+body {
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+}
+:root {
+  color-scheme: light;
+}
+:root.dark {
+  color-scheme: dark;
+}
+a,
+button,
+[tabindex] {
+  -webkit-tap-highlight-color: transparent;
+}
+:focus-visible {
+  outline: 3px solid #829b00;
+  outline-offset: 5px;
+}
+.dark :focus-visible {
+  outline-color: #c3e41d;
+}
+.project-description {
+  color: #525252;
+}
+.dark .project-description {
+  color: #a3a3a3;
+}
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 200;
+  padding: 12px 20px;
+  background: #c3e41d;
+  color: #000;
+  border-radius: 8px;
+  transform: translateY(-150%);
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+.blog-shell {
+  background:
+    radial-gradient(ellipse at top right, #c3e41d0a, transparent 45%), #0a0a0a;
+  color-scheme: dark;
+}
+@keyframes portfolio-reveal {
+  from {
+    filter: blur(10px);
+    opacity: 0;
+    transform: translateY(var(--reveal-offset, -20px));
+  }
+  to {
+    filter: blur(0);
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
 }

@@ -1,0 +1,225 @@
+{
+  "updatedAt": "2026-10-14T10:52:33.639460+00:00",
+  "sources": [
+    {
+      "id": "frandroid",
+      "name": "Frandroid",
+      "url": "https://www.frandroid.com/"
+    },
+    {
+      "id": "bdm",
+      "name": "Blog du Modérateur",
+      "url": "https://www.blogdumoderateur.com/"
+    }
+  ],
+  "articles": [
+    {
+      "id": "1f5c035a7175d50a",
+      "title": "ColorOS 17 : Oppo lance sa mise à jour, mais l’Europe est privée de plusieurs fonctions",
+      "url": "https://www.frandroid.com/marques/3284413_coloros-17-oppo-lance-sa-mise-a-jour-mais-leurope-est-privee-de-plusieurs-fonctions",
+      "sourceId": "frandroid",
+      "source": "Frandroid",
+      "category": "IA",
+      "date": "2026-10-14T09:44:45+00:00"
+    },
+    {
+      "id": "8e60ed519969307a",
+      "title": "Emploi : l’IA freine déjà l’embauche des jeunes",
+      "url": "https://www.blogdumoderateur.com/ia-freine-embauche-jeunes/",
+      "sourceId": "bdm",
+      "source": "Blog du Modérateur",
+      "category": "IA",
+      "date": "2026-10-14T09:06:01+00:00"
+    },
+    {
+      "id": "41629dde4ab1f248",
+      "title": "Gemini 4 Argon est enfin accessible : qui peut l’utiliser et à quel prix ?",
+      "url": "https://www.blogdumoderateur.com/gemini-4-argon-accessible/",
+      "sourceId": "bdm",
+      "source": "Blog du Modérateur",
+      "category": "IA",
+      "date": "2026-10-14T09:04:03+00:00"
+    },
+    {
+      "id": "4805e5af1c523dec",
+      "title": "Comment les community managers utilisent l’IA en 2026",
+      "url": "https://www.blogdumoderateur.com/enquete-community-managers-ia-2026/",
+      "sourceId": "bdm",
+      "source": "Blog du Modérateur",
+      "category": "IA",
+      "date": "2026-10-14T05:30:44+00:00"
+    },
+    {
+      "id": "9dc75f900993b82b",
+      "title": "Mais au fait, c’est quoi l’alignement des modèles d’IA ?",
+      "url": "https://www.blogdumoderateur.com/alignement-modeles-ia/",
+      "sourceId": "bdm",
+      "source": "Blog du Modérateur",
+      "category": "IA",
+      "date": "2026-10-13T12:34:17+00:00"
+    },
+    {
+      "id": "2fda2a6842bf4ece",
+      "title": "Avec Muse Wonder, Meta entre dans la course aux modèles d’IA de pointe",
+      "url": "https://www.blogdumoderateur.com/muse-wonder-meta-entre-dans-course-modeles-ia-pointe/",
+      "sourceId": "bdm",
+      "source": "Blog du Modérateur",
+      "category": "IA",
+      "date": "2026-10-13T08:11:00+00:00"
+    },
+    {
+      "id": "d81f5e69b0d6f6b8",
+      "title": "Billets, hôtels, IA : comment Sodexo Live! fait de la donnée son « cheval de bataille »",
+      "url": "https://www.blogdumoderateur.com/billets-hotels-ia-comment-sodexo-live-donnee-cheval-bataille/",
+      "sourceId": "bdm",
+      "source": "Blog du Modérateur",
+      "category": "IA",
+      "date": "2026-10-13T06:00:05+00:00"
+    },
+    {
+      "id": "adb8caeb47d8be92",
+      "title": "Les 100 outils IA les plus utilisés dans le monde à l’automne 2026",
+      "url": "https://www.blogdumoderateur.com/100-outils-ia-plus-utilises-monde-automne-2026/",
+      "sourceId": "bdm",
+      "source": "Blog du Modérateur",
+      "category": "IA",
+      "date": "2026-10-12T15:03:11+00:00"
+    },
+    {
+      "id": "aab3dc9b32b68aa7",
+      "title": "Claude peut désormais générer des tableaux de bord et des animations",
+      "url": "https://www.blogdumoderateur.com/claude-generer-tableaux-bord-animations/",
+      "sourceId": "bdm",
+      "source": "Blog du Modérateur",
+      "category": "IA",
+      "date": "2026-10-12T15:00:23+00:00"
+    },
+    {
+      "id": "e8ad79c2f8a1129b",
+      "title": "Les 20 langages informatiques les plus populaires en octobre 2026",
+      "url": "https://www.blogdumoderateur.com/20-langages-informatiques-populaires-octobre-2026/",
+      "sourceId": "bdm",
+      "source": "Blog du Modérateur",
+      "category": "Développement",
+      "date": "2026-10-12T08:32:16+00:00"
+    },
+    {
+      "id": "ed709d480c010c2b",
+      "title": "Positive ouvre sa suite marketing aux agents IA avec ses serveurs MCP",
+      "url": "https://www.blogdumoderateur.com/positive-ouvre-suite-marketing-agentis-ia-serveurs-mcp/",
+      "sourceId": "bdm",
+      "source": "Blog du Modérateur",
+      "category": "IA",
+      "date": "2026-10-12T07:14:43+00:00"
+    },
+    {
+      "id": "bffedba86d4d453f",
+      "title": "5 formations pour devenir community manager à l’ère de l’IA",
+      "url": "https://www.blogdumoderateur.com/selection-formation-community-manager-321/",
+      "sourceId": "bdm",
+      "source": "Blog du Modérateur",
+      "category": "IA",
+      "date": "2026-10-12T06:00:41+00:00"
+    },
+    {
+      "id": "4a82e26ac8eef794",
+      "title": "Face aux AI Overviews, ibou veut « rendre aux médias la visibilité qu’ils n’ont pas toujours sur les plateformes »",
+      "url": "https://www.blogdumoderateur.com/face-ai-overviews-ibou-veut-rendre-medias-visibilite-plateformes/",
+      "sourceId": "bdm",
+      "source": "Blog du Modérateur",
+      "category": "IA",
+      "date": "2026-10-12T05:00:50+00:00"
+    },
+    {
+      "id": "4c13c717999972a5",
+      "title": "Google lance l’agent Gemini, un agent unique pour tout le travail en entreprise",
+      "url": "https://www.blogdumoderateur.com/google-agent-gemini-unique-travail-entreprise/",
+      "sourceId": "bdm",
+      "source": "Blog du Modérateur",
+      "category": "IA",
+      "date": "2026-10-09T07:23:19+00:00"
+    },
+    {
+      "id": "040cee8a86916ad9",
+      "title": "Facturation, recrutements : comment l’IA bouscule le modèle des ESN",
+      "url": "https://www.blogdumoderateur.com/facturation-recrutements-comment-ia-bouscule-modele-esn/",
+      "sourceId": "bdm",
+      "source": "Blog du Modérateur",
+      "category": "IA",
+      "date": "2026-10-09T07:14:57+00:00"
+    },
+    {
+      "id": "345ca4c3b4482f2d",
+      "title": "Comment LinkedIn est devenu le royaume de l’AI Slop",
+      "url": "https://www.blogdumoderateur.com/linkedin-royaume-ai-slop/",
+      "sourceId": "bdm",
+      "source": "Blog du Modérateur",
+      "category": "IA",
+      "date": "2026-10-09T05:00:01+00:00"
+    },
+    {
+      "id": "e2b3bcb9fa00b347",
+      "title": "Claude Team offert pendant un an aux startups : conditions, avantages et marche à suivre",
+      "url": "https://www.blogdumoderateur.com/claude-team-offert-startups/",
+      "sourceId": "bdm",
+      "source": "Blog du Modérateur",
+      "category": "IA",
+      "date": "2026-10-08T09:23:13+00:00"
+    },
+    {
+      "id": "554500a776ae9bd0",
+      "title": "Google lance SynthID Detector, un outil gratuit pour détecter les contenus générés par l’IA",
+      "url": "https://www.blogdumoderateur.com/google-lance-synthid-detector/",
+      "sourceId": "bdm",
+      "source": "Blog du Modérateur",
+      "category": "IA",
+      "date": "2026-10-08T09:02:16+00:00"
+    },
+    {
+      "id": "79a57cd30435d35f",
+      "title": "ChatGPT passe à GPT-6, avec une nouvelle interface interactive",
+      "url": "https://www.blogdumoderateur.com/chatgpt-passe-gpt-6-nouvelle-interface/",
+      "sourceId": "bdm",
+      "source": "Blog du Modérateur",
+      "category": "IA",
+      "date": "2026-10-08T08:47:01+00:00"
+    },
+    {
+      "id": "0ffef55f803398ac",
+      "title": "Anthropic lance Claude Haiku 5.5, son modèle le plus rapide pour les tâches à fort volume",
+      "url": "https://www.blogdumoderateur.com/anthropic-claude-haiku-5-5/",
+      "sourceId": "bdm",
+      "source": "Blog du Modérateur",
+      "category": "IA",
+      "date": "2026-10-08T08:45:34+00:00"
+    },
+    {
+      "id": "0581511e13d4af79",
+      "title": "Comment les agences automatisent leur stratégie de contenu SEO avec Sedestral",
+      "url": "https://www.blogdumoderateur.com/sedestral-automatisation-contenu-seo-agences/",
+      "sourceId": "bdm",
+      "source": "Blog du Modérateur",
+      "category": "IA",
+      "date": "2026-10-08T07:47:19+00:00"
+    },
+    {
+      "id": "953b9607ad695655",
+      "title": "« Open web ne veut pas dire open bar » : que faire face à la montée des bots IA ?",
+      "url": "https://www.blogdumoderateur.com/que-faire-face-montee-bots-ia/",
+      "sourceId": "bdm",
+      "source": "Blog du Modérateur",
+      "category": "IA",
+      "date": "2026-10-08T05:00:18+00:00"
+    },
+    {
+      "id": "6c14758c72beb4ff",
+      "title": "Meta étend l’IA à toute la chaîne publicitaire, de la création au paiement",
+      "url": "https://www.blogdumoderateur.com/meta-etend-ia-toute-chaine-publicitaire/",
+      "sourceId": "bdm",
+      "source": "Blog du Modérateur",
+      "category": "IA",
+      "date": "2026-10-07T14:47:35+00:00"
+    }
+  ],
+  "warnings": []
+}

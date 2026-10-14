@@ -10,7 +10,8 @@ const nextConfig: NextConfig = isGitHubPages
       },
       basePath: "/portfoliowaniss",
       trailingSlash: true,
+      env: { NEXT_PUBLIC_BASE_PATH: "/portfoliowaniss" },
     }
-  : {};
+  : { env: { NEXT_PUBLIC_BASE_PATH: "" } };
 
 export default nextConfig;
