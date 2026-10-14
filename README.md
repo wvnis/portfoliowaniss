@@ -18,9 +18,9 @@ Ajouter une entrée dans `data/journal.ts` : un `slug` unique, un titre, une dat
 
 ## Modifier les sources de veille
 
-Les sources RSS se trouvent dans `data/news-sources.json`. Elles sont actuellement Frandroid et le Blog du Modérateur. Le script retient les titres liés à l’IA et au développement, supprime les doublons et conserve les articles récents (60 jours maximum, 60 articles maximum). Les mots-clés sont définis dans `scripts/fetch_news.py` et peuvent être ajustés. Aucun texte intégral d’article n’est republié.
+Les sources RSS se trouvent dans `data/news-sources.json`. Elles sont actuellement Frandroid et le Blog du Modérateur. Le script retient les titres liés à l’IA et au développement, supprime les doublons et conserve uniquement les articles des sept derniers jours (fenêtre glissante de 168 heures). Les mots-clés sont définis dans `scripts/fetch_news.py` et peuvent être ajustés. Aucun texte intégral d’article n’est republié. Le journal apparaît en premier sur toute la largeur, puis la veille en dessous.
 
-La veille est récupérée lors de la compilation et, après intégration sur `main`, toutes les six heures par GitHub Actions. GitHub peut retarder les exécutions planifiées ; il ne s’agit pas d’un flux en temps réel. Si une source est indisponible, les derniers articles présents dans le fichier de cache sont conservés et un message apparaît dans le blog. La collecte à partir de `portfolio_2` ne publie pas le site de production.
+La veille est récupérée lors de la compilation et, après intégration sur `main`, une fois par jour par GitHub Actions. Le workflow télécharge l’index déjà publié avant d’ajouter les nouveaux articles, afin de conserver l’historique d’un jour à l’autre même si un article sort du flux RSS. Les articles de plus de sept jours sont supprimés à chaque collecte et masqués automatiquement dans le navigateur, même si l’actualisation échoue. La page contrôle leur âge chaque minute, recharge les nouvelles données chaque jour et lors du retour sur l’onglet. Si une source est indisponible, ses articles encore valides sont conservés et un message apparaît dans le blog. GitHub peut retarder les exécutions planifiées. La collecte à partir de `portfolio_2` ne publie pas le site de production.
 
 ## Validation
 

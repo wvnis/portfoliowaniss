@@ -21,6 +21,7 @@ type NewsData = {
   warnings: string[];
 };
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const WEEK_IN_MS = 7 * 24 * 60 * 60 * 1000;
 const formatDate = (date: string) =>
   new Intl.DateTimeFormat("fr-FR", {
     day: "numeric",
@@ -37,33 +38,56 @@ export function BlogContent() {
   const [category, setCategory] = useState("Tout");
   const [source, setSource] = useState("Toutes les sources");
   const [visibleCount, setVisibleCount] = useState(8);
+  const [now, setNow] = useState(0);
   useEffect(() => {
     const controller = new AbortController();
-    fetch(`${basePath}/news.json`, { signal: controller.signal })
-      .then((response) => {
-        if (!response.ok) throw new Error("News unavailable");
-        return response.json();
+    const refreshNews = () =>
+      fetch(`${basePath}/news.json`, {
+        signal: controller.signal,
+        cache: "no-store",
       })
-      .then((data: NewsData) => {
-        setNews(data);
-        setFailed(false);
-      })
-      .catch((error: Error) => {
-        if (error.name !== "AbortError") setFailed(true);
-      });
-    return () => controller.abort();
+        .then((response) => {
+          if (!response.ok) throw new Error("News unavailable");
+          return response.json();
+        })
+        .then((data: NewsData) => {
+          setNews(data);
+          setNow(Date.now());
+          setFailed(false);
+        })
+        .catch((error: Error) => {
+          if (error.name !== "AbortError") setFailed(true);
+        });
+    refreshNews();
+    const refreshTimer = setInterval(refreshNews, 24 * 60 * 60 * 1000);
+    const clockTimer = setInterval(() => setNow(Date.now()), 60 * 1000);
+    const handleVisibility = () => {
+      if (document.visibilityState === "visible") {
+        setNow(Date.now());
+        refreshNews();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => {
+      controller.abort();
+      clearInterval(refreshTimer);
+      clearInterval(clockTimer);
+      document.removeEventListener("visibilitychange", handleVisibility);
+    };
   }, [attempt]);
   const articles = useMemo(
     () =>
       (news?.articles ?? []).filter(
         (article) =>
+          Date.parse(article.date) >= now - WEEK_IN_MS &&
+          Date.parse(article.date) <= now &&
           (category === "Tout" || article.category === category) &&
           (source === "Toutes les sources" || article.sourceId === source) &&
           `${article.title} ${article.source}`
             .toLocaleLowerCase("fr")
             .includes(query.toLocaleLowerCase("fr")),
       ),
-    [news, category, source, query],
+    [news, category, source, query, now],
   );
   return (
     <main className="blog-shell min-h-screen px-5 pb-6 pt-6 text-white sm:px-8">
@@ -89,8 +113,8 @@ export function BlogContent() {
             <span className="text-[#C3E41D]">Le web aussi.</span>
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-neutral-300 sm:text-lg">
-            D’un côté, les étapes de mes réalisations. De l’autre, une veille
-            automatique pour suivre l’IA et le développement.
+            Mon journal pour partager les étapes de mes réalisations, puis une
+            veille quotidienne pour suivre l’IA et le développement.
           </p>
           <nav
             aria-label="Rubriques du blog"
@@ -110,7 +134,7 @@ export function BlogContent() {
             </a>
           </nav>
         </div>
-        <div className="grid items-start gap-8 lg:grid-cols-[0.85fr_1.15fr]">
+        <div className="space-y-16 sm:space-y-20">
           <section id="journal" className="scroll-mt-8">
             <div className="mb-6 flex items-center gap-3">
               <BookOpen className="text-[#C3E41D]" size={24} />
@@ -158,14 +182,18 @@ export function BlogContent() {
               </p>
             </div>
           </section>
-          <section id="veille" className="scroll-mt-8">
+          <section
+            id="veille"
+            className="scroll-mt-8 border-t border-white/10 pt-12 sm:pt-16"
+          >
             <div className="mb-6 flex items-center gap-3">
               <Radio className="text-[#C3E41D]" size={24} />
               <h2 className="text-2xl font-semibold">Veille IA & dev</h2>
             </div>
             <p className="mb-6 text-sm leading-relaxed text-neutral-400">
               Titres et liens vers les articles de Frandroid et du Blog du
-              Modérateur.
+              Modérateur. Actualisation quotidienne, avec les actualités des
+              sept derniers jours uniquement.
             </p>
             <div className="rounded-3xl border border-white/15 bg-white/[0.03] p-5 sm:p-6">
               <div className="relative">
@@ -248,7 +276,8 @@ export function BlogContent() {
                     {news.warnings.length > 0 && (
                       <p className="mb-4 text-xs leading-relaxed text-neutral-400">
                         Une ou plusieurs sources n’ont pas pu être actualisées.
-                        Les derniers articles disponibles sont conservés.
+                        Les articles disponibles des sept derniers jours sont
+                        conservés.
                       </p>
                     )}
                     {articles.length === 0 && (

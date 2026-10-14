@@ -3,6 +3,7 @@ import concurrent.futures
 import hashlib
 import html
 import json
+import os
 import re
 import unicodedata
 import urllib.request
@@ -14,6 +15,7 @@ from urllib.parse import urljoin, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 MAX_BYTES = 2_000_000
+RETENTION_DAYS = 7
 ATOM = "{http://www.w3.org/2005/Atom}"
 AI = re.compile(r"\b(ia|ai|llm|chatgpt|openai|claude|anthropic|gemini|copilot|deepseek|mistral|grok|hugging face|intelligence artificielle|intelligences artificielles|machine learning|agents? ia)\b", re.I)
 DEV = re.compile(r"\b(developpement|developpeurs?|developer|programmation|programming|javascript|typescript|python|react|next\.js|html|css|sql|github|gitlab|api|apis|webdev|coding|vibe coding|code source|open source|wordpress|framework)\b", re.I)
@@ -80,7 +82,7 @@ def parse_feed(raw, source, now=None):
         if parsed.hostname != host:
             continue
         date = parse_date(item.findtext(ATOM + "published", item.findtext(ATOM + "updated", "")) if is_atom else item.findtext("pubDate", ""))
-        if date is None or date < now - timedelta(days=60) or date > now + timedelta(days=1):
+        if date is None or date < now - timedelta(days=RETENTION_DAYS) or date > now:
             continue
         seen.add(link)
         articles.append({"id": hashlib.sha256(link.encode()).hexdigest()[:16], "title": title, "url": link, "sourceId": source["id"], "source": source["name"], "category": category, "date": date.isoformat()})
@@ -117,18 +119,59 @@ def collect_news(sources, previous, fetch=fetch_source, now=None):
     recent = {}
     for article in articles:
         date = parse_date(article["date"])
-        if date and now - timedelta(days=60) <= date <= now + timedelta(days=1) and "/bons-plans/" not in article["url"]:
+        if date and now - timedelta(days=RETENTION_DAYS) <= date <= now and "/bons-plans/" not in article["url"]:
             recent.setdefault(article["url"], article)
-    return {"updatedAt": now.isoformat() if successes else previous.get("updatedAt"), "sources": [{key: source[key] for key in ("id", "name", "url")} for source in sources], "articles": sorted(recent.values(), key=lambda article: article["date"], reverse=True)[:60], "warnings": sorted(warnings)}
+    return {"updatedAt": now.isoformat() if successes else previous.get("updatedAt"), "sources": [{key: source[key] for key in ("id", "name", "url")} for source in sources], "articles": sorted(recent.values(), key=lambda article: article["date"], reverse=True), "warnings": sorted(warnings)}
+
+
+def load_previous(destination, sources, history_url=None):
+    """Reuse the published history so scheduled builds retain previous days."""
+    snapshots = []
+    try:
+        snapshots.append(json.loads(destination.read_text(encoding="utf-8")))
+    except (OSError, json.JSONDecodeError):
+        pass
+    if history_url:
+        try:
+            request = urllib.request.Request(history_url, headers={"User-Agent": "WanissPortfolioNews/1.0", "Cache-Control": "no-cache"})
+            with urllib.request.urlopen(request, timeout=20) as response:
+                raw = response.read(MAX_BYTES + 1)
+            if len(raw) > MAX_BYTES:
+                raise ValueError("History exceeds maximum size")
+            snapshots.append(json.loads(raw))
+        except (OSError, ValueError) as error:
+            print(f"Warning: published history unavailable: {type(error).__name__}; using local cache")
+    source_map = {source["id"]: source for source in sources}
+    articles = {}
+    updated_at = None
+    required = ("id", "title", "url", "sourceId", "source", "category", "date")
+    for snapshot in snapshots:
+        if not isinstance(snapshot, dict):
+            continue
+        timestamp = snapshot.get("updatedAt")
+        if isinstance(timestamp, str) and parse_date(timestamp):
+            if updated_at is None or parse_date(timestamp) > parse_date(updated_at):
+                updated_at = timestamp
+        records = snapshot.get("articles", [])
+        if not isinstance(records, list):
+            continue
+        for record in records:
+            if not isinstance(record, dict) or not all(isinstance(record.get(key), str) for key in required):
+                continue
+            source = source_map.get(record["sourceId"])
+            url = urlsplit(record["url"])
+            if not source or url.scheme not in ("http", "https") or url.username or url.hostname != urlsplit(source["url"]).hostname:
+                continue
+            if record["category"] not in ("IA", "Développement") or not parse_date(record["date"]):
+                continue
+            articles[record["url"]] = {key: record[key] for key in required}
+    return {"articles": list(articles.values()), "updatedAt": updated_at}
 
 
 def main():
     sources = json.loads((ROOT / "data/news-sources.json").read_text(encoding="utf-8"))
     destination = ROOT / "public/news.json"
-    try:
-        previous = json.loads(destination.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError):
-        previous = {}
+    previous = load_previous(destination, sources, os.environ.get("NEWS_HISTORY_URL"))
     data = collect_news(sources, previous)
     destination.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"News index: {len(data['articles'])} articles; {len(data['warnings'])} source warnings")
