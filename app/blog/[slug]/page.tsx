@@ -66,6 +66,41 @@ export default async function JournalPage({
             {entry.summary}
           </p>
         </header>
+        {entry.introduction && (
+          <section className="mb-10 space-y-4" aria-label="Contexte du projet">
+            <h2 className="text-2xl font-semibold">Le point de départ</h2>
+            {entry.introduction.map((paragraph) => (
+              <p key={paragraph} className="leading-relaxed text-neutral-300">
+                {paragraph}
+              </p>
+            ))}
+          </section>
+        )}
+        {entry.objective && (
+          <section className="mb-10 rounded-2xl border border-[#C3E41D]/25 bg-white/[0.03] p-6">
+            <h2 className="text-xl font-semibold text-[#C3E41D]">
+              L’objectif de cette version
+            </h2>
+            <p className="mt-3 leading-relaxed text-neutral-300">
+              {entry.objective}
+            </p>
+          </section>
+        )}
+        {entry.technologies && (
+          <section className="mb-12" aria-label="Technologies utilisées">
+            <h2 className="text-xl font-semibold">Les outils utilisés</h2>
+            <ul className="mt-4 flex flex-wrap gap-2">
+              {entry.technologies.map((technology) => (
+                <li
+                  key={technology}
+                  className="rounded-full border border-white/15 px-3 py-2 text-sm text-neutral-300"
+                >
+                  {technology}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
         <ol className="space-y-10">
           {entry.steps.map((step, index) => (
             <li
@@ -80,10 +115,41 @@ export default async function JournalPage({
                 <p className="mt-3 leading-relaxed text-neutral-300">
                   {step.text}
                 </p>
+                {step.details?.map((paragraph) => (
+                  <p
+                    key={paragraph}
+                    className="mt-4 leading-relaxed text-neutral-300"
+                  >
+                    {paragraph}
+                  </p>
+                ))}
               </section>
             </li>
           ))}
         </ol>
+        {entry.outcome && (
+          <section className="mt-12 border-t border-white/15 pt-8">
+            <h2 className="text-2xl font-semibold">Le résultat</h2>
+            <p className="mt-4 leading-relaxed text-neutral-300">
+              {entry.outcome}
+            </p>
+          </section>
+        )}
+        {entry.nextSteps && (
+          <section className="mt-10">
+            <h2 className="text-2xl font-semibold">La suite du journal</h2>
+            <ul className="mt-4 space-y-3 text-neutral-300">
+              {entry.nextSteps.map((item) => (
+                <li key={item} className="flex gap-3 leading-relaxed">
+                  <span aria-hidden="true" className="text-[#C3E41D]">
+                    →
+                  </span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
         <div className="mt-12 flex flex-wrap gap-3">
           {entry.links.map((link) => (
             <a

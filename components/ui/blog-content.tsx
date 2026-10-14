@@ -140,9 +140,17 @@ export function BlogContent() {
               <BookOpen className="text-[#C3E41D]" size={24} />
               <h2 className="text-2xl font-semibold">Mon journal</h2>
             </div>
-            <p className="mb-6 text-sm leading-relaxed text-neutral-400">
-              Les choix, les étapes et les leçons de mes projets.
-            </p>
+            <div className="mb-6 max-w-3xl space-y-3 text-sm leading-relaxed text-neutral-400">
+              <p>
+                Dans ce journal, je raconte la progression de mes projets : leur
+                objectif, les outils utilisés, les principales étapes et les
+                vérifications réalisées.
+              </p>
+              <p>
+                Chaque récit donne le contexte et explique les choix qui
+                permettent de passer de l’idée à une réalisation concrète.
+              </p>
+            </div>
             {journal.map((entry) => (
               <article
                 key={entry.slug}
@@ -153,6 +161,7 @@ export function BlogContent() {
                     {entry.category}
                   </span>
                   <time dateTime={entry.date}>{formatDate(entry.date)}</time>
+                  <span>{entry.steps.length} étapes expliquées</span>
                 </div>
                 <h3 className="mt-6 text-2xl font-semibold leading-snug">
                   <Link
