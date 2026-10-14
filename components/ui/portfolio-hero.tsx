@@ -4,6 +4,7 @@ import {
   memo,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
   type CSSProperties,
@@ -13,7 +14,8 @@ import Image from "next/image";
 import { Mail, Menu, X } from "lucide-react";
 import { LandingAccordionItem } from "./interactive-image-accordion";
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const basePath =
+  process.env.NODE_ENV === "production" ? "/portfoliowaniss" : "";
 
 type BlurTextProps = {
   text: string;
@@ -50,13 +52,12 @@ type ContactLink = {
 };
 
 const MENU_ITEMS: MenuItem[] = [
-  { label: "ACCUEIL", href: "#home", highlight: true },
-  { label: "À PROPOS", href: "#about" },
-  { label: "COMPÉTENCES", href: "#skills" },
-  { label: "PROJETS", href: "#projects" },
+  { label: "HOME", href: "#home", highlight: true },
+  { label: "ABOUT", href: "#about" },
+  { label: "SKILLS", href: "#skills" },
+  { label: "PROJECTS", href: "#projects" },
   { label: "FORMATION", href: "#formation" },
   { label: "CV", href: "#cv" },
-  { label: "BLOG", href: `${basePath}/blog/` },
   { label: "CONTACT", href: "#contact" },
 ];
 
@@ -121,22 +122,47 @@ const BlurText = memo(function BlurText({
   className = "",
   style,
 }: BlurTextProps) {
-  const segments = animateBy === "words" ? text.split(" ") : text.split("");
+  const [inView, setInView] = useState(false);
+  const ref = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.unobserve(element);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
+  const segments = useMemo(
+    () => (animateBy === "words" ? text.split(" ") : text.split("")),
+    [text, animateBy]
+  );
 
   const translateY = direction === "top" ? "-20px" : "20px";
 
   return (
-    <p className={`inline-flex flex-wrap ${className}`} style={style}>
+    <p ref={ref} className={`inline-flex flex-wrap ${className}`} style={style}>
       {segments.map((segment, index) => (
         <span
           key={`${segment}-${index}`}
-          style={
-            {
-              display: "inline-block",
-              "--reveal-offset": translateY,
-              animation: `portfolio-reveal 0.5s ease-out ${index * delay}ms both`,
-            } as CSSProperties
-          }
+          style={{
+            display: "inline-block",
+            filter: inView ? "blur(0)" : "blur(10px)",
+            opacity: inView ? 1 : 0,
+            transform: inView ? "translateY(0)" : `translateY(${translateY})`,
+            transition: `filter 0.5s ease-out ${index * delay}ms, opacity 0.5s ease-out ${index * delay}ms, transform 0.5s ease-out ${index * delay}ms`,
+            willChange: "filter, opacity, transform",
+          }}
         >
           {segment}
           {animateBy === "words" && index < segments.length - 1 ? "\u00A0" : ""}
@@ -200,14 +226,14 @@ const NavMenu = memo(function NavMenu({
           onClick={onClose}
           className="block text-lg md:text-xl font-bold tracking-tight py-1.5 px-2 rounded-md transition-colors duration-200"
           style={{
-            color: item.highlight ? "var(--portfolio-accent)" : defaultColor,
+            color: item.highlight ? "#C3E41D" : defaultColor,
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.color = "var(--portfolio-accent)";
+            e.currentTarget.style.color = "#C3E41D";
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.color = item.highlight
-              ? "var(--portfolio-accent)"
+              ? "#C3E41D"
               : defaultColor;
           }}
         >
@@ -231,8 +257,7 @@ const ThemeToggle = memo(function ThemeToggle({
       onClick={onToggle}
       className="relative w-14 h-7 rounded-full transition-colors duration-300"
       style={{ backgroundColor: isDark ? "hsl(0 0% 18%)" : "hsl(0 0% 85%)" }}
-      aria-label={isDark ? "Activer le thème clair" : "Activer le thème sombre"}
-      aria-pressed={isDark}
+      aria-label="Basculer le thème"
     >
       <span
         className="absolute top-[3px] left-[3px] w-[22px] h-[22px] rounded-full"
@@ -270,11 +295,7 @@ const SkillCard = memo(function SkillCard({
             className="flex items-center gap-2"
             style={{ color: isDark ? "#a3a3a3" : "#404040" }}
           >
-            <span
-              style={{ color: "var(--portfolio-accent)", fontSize: "0.6rem" }}
-            >
-              ●
-            </span>
+            <span style={{ color: "#C3E41D", fontSize: "0.6rem" }}>●</span>
             {item}
           </li>
         ))}
@@ -358,7 +379,7 @@ const ContactPill = memo(function ContactPill({
   );
 });
 
-export default function Portfolio() {
+export default function Component() {
   const [isDark, setIsDark] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -366,26 +387,14 @@ export default function Portfolio() {
 
   useEffect(() => {
     document.documentElement.classList.add("dark");
-    try {
-      const saved = localStorage.getItem("portfolio-theme");
-      if (saved === "light" || saved === "dark") {
-        const frame = requestAnimationFrame(() => setIsDark(saved === "dark"));
-        document.documentElement.classList.toggle("dark", saved === "dark");
-        return () => cancelAnimationFrame(frame);
-      }
-    } catch {
-      /* Storage may be unavailable. */
-    }
+    document.documentElement.style.scrollBehavior = "smooth";
   }, []);
 
   useEffect(() => {
     if (!isMenuOpen) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setIsMenuOpen(false);
-        buttonRef.current?.focus();
-      }
+      if (event.key === "Escape") setIsMenuOpen(false);
     };
 
     const handleClickOutside = (event: MouseEvent) => {
@@ -412,11 +421,6 @@ export default function Portfolio() {
     setIsDark((prev) => {
       const next = !prev;
       document.documentElement.classList.toggle("dark", next);
-      try {
-        localStorage.setItem("portfolio-theme", next ? "dark" : "light");
-      } catch {
-        /* Keep the current theme without persistence. */
-      }
       return next;
     });
   }, []);
@@ -434,18 +438,7 @@ export default function Portfolio() {
       className="min-h-screen overflow-x-hidden transition-colors duration-300"
       style={{ backgroundColor: bgColor, color: fgColor }}
     >
-      <a href="#main-content" className="skip-link">
-        Aller au contenu
-      </a>
-      <header
-        style={{
-          backgroundColor: isDark
-            ? "rgba(0,0,0,0.85)"
-            : "rgba(250,250,250,0.9)",
-          backdropFilter: "blur(16px)",
-        }}
-        className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-4 sm:py-6"
-      >
+      <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-4 sm:py-6">
         <nav className="flex items-center justify-between max-w-screen-2xl mx-auto">
           <div className="relative">
             <button
@@ -454,7 +447,6 @@ export default function Portfolio() {
               className="p-2 text-neutral-500 hover:text-black dark:hover:text-white transition-colors duration-200 rounded-md"
               aria-label={isMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
               aria-expanded={isMenuOpen}
-              aria-controls="portfolio-navigation"
               onClick={() => setIsMenuOpen((open) => !open)}
             >
               {isMenuOpen ? (
@@ -465,7 +457,7 @@ export default function Portfolio() {
             </button>
 
             {isMenuOpen && (
-              <div ref={menuRef} id="portfolio-navigation">
+              <div ref={menuRef}>
                 <NavMenu
                   isDark={isDark}
                   items={MENU_ITEMS}
@@ -489,18 +481,14 @@ export default function Portfolio() {
         </nav>
       </header>
 
-      <main id="main-content">
+      <main>
         <section
           id="home"
-          className="relative min-h-[680px] min-h-svh flex flex-col"
-          style={{ minHeight: "max(680px, 100svh)" }}
+          className="relative min-h-screen flex flex-col"
           aria-label="Accueil"
         >
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-2 sm:px-4">
             <div className="relative text-center flex flex-col items-center">
-              <h1 className="sr-only">
-                Waniss Saggal — développeur web junior
-              </h1>
               <BlurText
                 text="WANISS"
                 delay={100}
@@ -508,7 +496,7 @@ export default function Portfolio() {
                 direction="top"
                 className="font-bold leading-[0.85] tracking-tighter uppercase justify-center whitespace-nowrap text-[22vw] sm:text-[20vw] md:text-[18vw] lg:text-[15vw] xl:text-[210px]"
                 style={{
-                  color: "var(--portfolio-accent)",
+                  color: "#C3E41D",
                   fontFamily: "'Fira Code', monospace",
                   display: "flex",
                 }}
@@ -520,7 +508,7 @@ export default function Portfolio() {
                 direction="top"
                 className="font-bold leading-[0.85] tracking-tighter uppercase justify-center whitespace-nowrap text-[22vw] sm:text-[20vw] md:text-[18vw] lg:text-[15vw] xl:text-[210px]"
                 style={{
-                  color: "var(--portfolio-accent)",
+                  color: "#C3E41D",
                   fontFamily: "'Fira Code', monospace",
                   display: "flex",
                 }}
@@ -528,7 +516,7 @@ export default function Portfolio() {
 
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
                 <div
-                  className="relative rounded-full overflow-hidden shadow-2xl hover:scale-110 transition-transform duration-300"
+                  className="relative rounded-full overflow-hidden shadow-2xl hover:scale-110 active:scale-105 transition-transform duration-300 cursor-pointer"
                   style={{
                     width: "clamp(55px, 8vw, 129px)",
                     height: "clamp(92px, 13.5vw, 218px)",
@@ -559,30 +547,14 @@ export default function Portfolio() {
               />
             </div>
           </div>
-          <div className="absolute bottom-5 left-0 right-0 flex flex-wrap justify-center gap-3 px-4">
-            <a
-              href="#projects"
-              className="rounded-full bg-[#C3E41D] px-5 py-3 text-sm font-semibold text-black"
-            >
-              Voir mes projets
-            </a>
-            <a
-              href={`${basePath}/cv-waniss.pdf`}
-              download
-              className="rounded-full border border-current px-5 py-3 text-sm font-semibold"
-            >
-              Télécharger mon CV
-            </a>
-          </div>
         </section>
 
         <section id="about" className={sectionClass} aria-label="À propos">
           <div className="grid md:grid-cols-2 gap-10 items-start">
             <div>
-              <SectionLabel>À PROPOS</SectionLabel>
+              <SectionLabel>ABOUT</SectionLabel>
               <SectionHeading>
-                Un portfolio étudiant pour présenter mon parcours et mes
-                projets.
+                Un portfolio étudiant pour présenter mon parcours et mes projets.
               </SectionHeading>
             </div>
 
@@ -608,7 +580,7 @@ export default function Portfolio() {
         </section>
 
         <section id="skills" className={sectionClass} aria-label="Compétences">
-          <SectionLabel>COMPÉTENCES</SectionLabel>
+          <SectionLabel>SKILLS</SectionLabel>
           <SectionHeading className="mb-10">Compétences</SectionHeading>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6">
@@ -620,33 +592,6 @@ export default function Portfolio() {
 
         <section id="projects" className={sectionClass} aria-label="Projets">
           <LandingAccordionItem />
-        </section>
-
-        <section className={sectionClass} aria-label="Blog et actualités">
-          <div
-            className="rounded-3xl border p-6 sm:p-10"
-            style={{
-              borderColor: isDark ? "#ffffff26" : "#00000026",
-              backgroundColor: isDark ? "#ffffff05" : "#00000003",
-            }}
-          >
-            <SectionLabel>BLOG & ACTUALITÉS</SectionLabel>
-            <SectionHeading>Mes projets, étape par étape.</SectionHeading>
-            <p
-              className="mt-5 max-w-2xl leading-relaxed"
-              style={{ color: mutedColor }}
-            >
-              Je partage l’évolution de mes réalisations et je suis les
-              actualités tech sélectionnées sur Frandroid
-              et Blog du Modérateur.
-            </p>
-            <a
-              href={`${basePath}/blog/`}
-              className="mt-7 inline-flex rounded-full bg-[#C3E41D] px-6 py-3 text-sm font-semibold text-black"
-            >
-              Découvrir le blog ↗
-            </a>
-          </div>
         </section>
 
         <section id="formation" className={sectionClass} aria-label="Formation">
@@ -713,6 +658,27 @@ export default function Portfolio() {
           </div>
         </section>
 
+        <section id="blog" className={sectionClass} aria-label="Blog">
+          <SectionLabel>BLOG</SectionLabel>
+          <SectionHeading className="mb-6">
+            Mon journal et les actualités tech
+          </SectionHeading>
+          <p
+            className="text-base md:text-lg leading-relaxed mb-8 max-w-2xl"
+            style={{ color: mutedColor }}
+          >
+            Retrouvez les étapes de mes projets et les actualités tech du moment
+            sélectionnées sur Frandroid et le Blog du Modérateur.
+          </p>
+          <a
+            href={`${basePath}/blog/`}
+            className="inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-semibold hover:opacity-85 active:scale-95 transition-all duration-200"
+            style={{ backgroundColor: "#C3E41D", color: "#000" }}
+          >
+            Découvrir le blog
+          </a>
+        </section>
+
         <section id="contact" className={sectionClass} aria-label="Contact">
           <div
             className="rounded-[2rem] p-6 sm:p-8 md:p-12"
@@ -744,13 +710,6 @@ export default function Portfolio() {
           </div>
         </section>
       </main>
-      <footer
-        className="mx-auto flex max-w-6xl flex-wrap justify-between gap-4 px-6 py-8 text-sm"
-        style={{ color: mutedColor }}
-      >
-        <p>Waniss Saggal · Portfolio</p>
-        <a href="#home">Retour en haut ↑</a>
-      </footer>
     </div>
   );
 }

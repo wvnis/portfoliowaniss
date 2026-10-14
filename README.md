@@ -2,6 +2,8 @@
 
 Portfolio Next.js publié sur GitHub Pages : https://wvnis.github.io/portfoliowaniss/
 
+L’accueil conserve la version d’origine : les cases des projets ouvrent directement les liens fournis, avec les mêmes animations, et un bloc Blog est ajouté entre le CV et le contact.
+
 ## Développement
 
 ```sh
