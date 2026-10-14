@@ -20,6 +20,8 @@ Ajouter une entrée dans `data/journal.ts` : un `slug` unique, un titre, une dat
 
 Pour un récit détaillé, ajouter les champs facultatifs `introduction`, `objective`, `technologies`, `outcome` et `nextSteps`. Chaque étape peut aussi contenir un tableau `details` pour ajouter des paragraphes explicatifs.
 
+Les champs `status`, `role`, `origin` et `challenge` permettent de préciser l’avancement, le rôle de l’auteur, le contexte et les difficultés. `objectiveTitle` et `outcomeTitle` adaptent les intitulés aux projets en cours. Les récits de Bonpass et du site d’artiste reprennent les informations fournies par Waniss ; aucune technologie ou fonctionnalité non confirmée n’y est ajoutée.
+
 ## Modifier les sources de veille
 
 Les sources RSS se trouvent dans `data/news-sources.json`. Elles sont actuellement Frandroid et le Blog du Modérateur. Le script retient les titres liés à l’IA et au développement, supprime les doublons et conserve uniquement les articles des sept derniers jours (fenêtre glissante de 168 heures). Les mots-clés sont définis dans `scripts/fetch_news.py` et peuvent être ajustés. Aucun texte intégral d’article n’est republié. Le journal apparaît en premier sur toute la largeur, puis la veille en dessous.

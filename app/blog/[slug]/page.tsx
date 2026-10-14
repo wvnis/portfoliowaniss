@@ -65,6 +65,30 @@ export default async function JournalPage({
           <p className="mt-6 text-lg leading-relaxed text-neutral-300">
             {entry.summary}
           </p>
+          {(entry.status || entry.role || entry.origin) && (
+            <dl className="mt-6 space-y-3 text-sm">
+              {entry.status && (
+                <div className="flex flex-wrap items-center gap-3">
+                  <dt className="text-neutral-400">État du projet</dt>
+                  <dd className="rounded-full border border-[#C3E41D]/30 px-3 py-1 text-[#C3E41D]">
+                    {entry.status}
+                  </dd>
+                </div>
+              )}
+              {entry.role && (
+                <div className="flex flex-wrap gap-2">
+                  <dt className="text-neutral-400">Mon rôle</dt>
+                  <dd className="text-neutral-200">{entry.role}</dd>
+                </div>
+              )}
+              {entry.origin && (
+                <div className="flex flex-wrap gap-2">
+                  <dt className="text-neutral-400">Origine et contexte</dt>
+                  <dd className="text-neutral-200">{entry.origin}</dd>
+                </div>
+              )}
+            </dl>
+          )}
         </header>
         {entry.introduction && (
           <section className="mb-10 space-y-4" aria-label="Contexte du projet">
@@ -79,7 +103,7 @@ export default async function JournalPage({
         {entry.objective && (
           <section className="mb-10 rounded-2xl border border-[#C3E41D]/25 bg-white/[0.03] p-6">
             <h2 className="text-xl font-semibold text-[#C3E41D]">
-              L’objectif de cette version
+              {entry.objectiveTitle ?? "L’objectif de cette version"}
             </h2>
             <p className="mt-3 leading-relaxed text-neutral-300">
               {entry.objective}
@@ -99,6 +123,14 @@ export default async function JournalPage({
                 </li>
               ))}
             </ul>
+          </section>
+        )}
+        {entry.challenge && (
+          <section className="mb-12">
+            <h2 className="text-2xl font-semibold">Le défi du projet</h2>
+            <p className="mt-4 leading-relaxed text-neutral-300">
+              {entry.challenge}
+            </p>
           </section>
         )}
         <ol className="space-y-10">
@@ -129,7 +161,9 @@ export default async function JournalPage({
         </ol>
         {entry.outcome && (
           <section className="mt-12 border-t border-white/15 pt-8">
-            <h2 className="text-2xl font-semibold">Le résultat</h2>
+            <h2 className="text-2xl font-semibold">
+              {entry.outcomeTitle ?? "Le résultat"}
+            </h2>
             <p className="mt-4 leading-relaxed text-neutral-300">
               {entry.outcome}
             </p>

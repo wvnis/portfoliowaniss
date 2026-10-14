@@ -151,43 +151,49 @@ export function BlogContent() {
                 permettent de passer de l’idée à une réalisation concrète.
               </p>
             </div>
-            {journal.map((entry) => (
-              <article
-                key={entry.slug}
-                className="rounded-3xl border border-white/15 bg-white/[0.03] p-6 sm:p-8"
-              >
-                <div className="flex flex-wrap items-center gap-3 text-xs text-neutral-400">
-                  <span className="rounded-full border border-[#C3E41D]/30 px-3 py-1 text-[#C3E41D]">
-                    {entry.category}
-                  </span>
-                  <time dateTime={entry.date}>{formatDate(entry.date)}</time>
-                  <span>{entry.steps.length} étapes expliquées</span>
-                </div>
-                <h3 className="mt-6 text-2xl font-semibold leading-snug">
+            <div className="space-y-5">
+              {journal.map((entry) => (
+                <article
+                  key={entry.slug}
+                  className="rounded-3xl border border-white/15 bg-white/[0.03] p-6 sm:p-8"
+                >
+                  <div className="flex flex-wrap items-center gap-3 text-xs text-neutral-400">
+                    <span className="rounded-full border border-[#C3E41D]/30 px-3 py-1 text-[#C3E41D]">
+                      {entry.category}
+                    </span>
+                    <time dateTime={entry.date}>{formatDate(entry.date)}</time>
+                    <span>{entry.steps.length} étapes expliquées</span>
+                    {entry.status && (
+                      <span className="text-neutral-200">{entry.status}</span>
+                    )}
+                  </div>
+                  <h3 className="mt-6 text-2xl font-semibold leading-snug">
+                    <Link
+                      href={`/blog/${entry.slug}/`}
+                      className="hover:text-[#C3E41D]"
+                    >
+                      {entry.title}
+                    </Link>
+                  </h3>
+                  <p className="mt-4 text-sm leading-relaxed text-neutral-300">
+                    {entry.summary}
+                  </p>
                   <Link
                     href={`/blog/${entry.slug}/`}
-                    className="hover:text-[#C3E41D]"
+                    className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#C3E41D]"
                   >
-                    {entry.title}
+                    Lire les étapes <ArrowUpRight size={16} />
                   </Link>
-                </h3>
-                <p className="mt-4 text-sm leading-relaxed text-neutral-300">
-                  {entry.summary}
-                </p>
-                <Link
-                  href={`/blog/${entry.slug}/`}
-                  className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#C3E41D]"
-                >
-                  Lire les étapes <ArrowUpRight size={16} />
-                </Link>
-              </article>
-            ))}
+                </article>
+              ))}
+            </div>
             <div className="mt-5 border-l border-[#C3E41D]/40 pl-5 text-sm leading-relaxed text-neutral-400">
               <p className="font-medium text-neutral-200">
-                À documenter ensuite
+                Les prochains récits
               </p>
               <p className="mt-2">
-                Le site réalisé pour un ami et les prochaines étapes de Bonpass.
+                Les prochaines avancées de Bonpass et un nouveau site prévu dans
+                les prochaines semaines.
               </p>
             </div>
           </section>
